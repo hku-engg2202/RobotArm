@@ -1,0 +1,211 @@
+
+# Push a Local Folder to GitHub (Mac)
+
+## 1. Open Terminal and go to the project folder
+
+```bash
+cd ~/robotarm
+```
+
+Verify you're in the correct folder:
+
+```bash
+pwd
+ls
+```
+
+---
+
+## 2. Initialize Git
+
+Create a Git repository in the folder:
+
+```bash
+git init
+```
+
+This creates the hidden `.git` directory.
+
+---
+
+## 3. Add files to Git
+
+Stage all files:
+
+```bash
+git add .
+```
+
+Check what will be committed:
+
+```bash
+git status
+```
+
+---
+
+## 4. Create the first commit
+
+```bash
+git commit -m "Initial commit"
+```
+
+---
+
+## 5. Configure Git identity (recommended)
+
+Set your GitHub identity:
+
+```bash
+git config --global user.name "Chenhao Tang"
+git config --global user.email "chenhaotang1@gmail.com"
+```
+
+Verify:
+
+```bash
+git config --global --list
+```
+
+---
+
+## 6. Create an SSH key (one-time setup)
+
+Generate a key:
+
+```bash
+ssh-keygen -t ed25519 -C "chenhaotang1@gmail.com"
+```
+
+Press Enter to accept the default location:
+
+```text
+~/.ssh/id_ed25519
+```
+
+---
+
+## 7. Copy the public key
+
+Display the public key:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copy the entire line.
+
+---
+
+## 8. Add the SSH key to GitHub
+
+Go to:
+
+[GitHub SSH Keys Settings](https://github.com/settings/keys?utm_source=chatgpt.com)
+
+1. Click **New SSH key**
+2. Give it a name (e.g., "MacBook")
+3. Paste the public key
+4. Save
+
+---
+
+## 9. Test SSH authentication
+
+```bash
+ssh -T git@github.com
+```
+
+Successful output:
+
+```text
+Hi henry2772! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+---
+
+## 10. Connect the local repo to GitHub
+
+Add the remote repository:
+
+```bash
+git remote add origin git@github.com:hku-engg2202/RobotArm.git
+```
+
+Or if a remote already exists:
+
+```bash
+git remote set-url origin git@github.com:hku-engg2202/RobotArm.git
+```
+
+Verify:
+
+```bash
+git remote -v
+```
+
+---
+
+## 11. Push to GitHub
+
+Push the current branch:
+
+```bash
+git push -u origin main
+```
+
+The `-u` sets the upstream branch so future pushes are simpler.
+
+---
+
+# Future Workflow
+
+After making changes:
+
+```bash
+git add .
+git commit -m "Describe the change"
+git push
+```
+
+That's it.
+
+---
+
+# Useful Commands
+
+Check status:
+
+```bash
+git status
+```
+
+See commit history:
+
+```bash
+git log --oneline
+```
+
+See remote repository:
+
+```bash
+git remote -v
+```
+
+Pull latest changes from GitHub:
+
+```bash
+git pull
+```
+
+Ignore macOS `.DS_Store` files:
+
+```bash
+echo ".DS_Store" >> .gitignore
+git rm --cached .DS_Store
+git add .gitignore
+git commit -m "Ignore .DS_Store"
+git push
+```
+
+Now your Mac is properly configured for GitHub SSH, so future repositories only need steps **1–4, 10, and 11**. The SSH key setup (steps 6–9) is usually a one-time setup per machine.
